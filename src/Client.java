@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -9,15 +10,11 @@ import java.util.Scanner;
 public class Client extends PublicIp{
 
     public static void main(String[] args) throws IOException {
-
-        Scanner input = new Scanner(System.in);
-        System.out.println("enter an Ip Address: "); // get the ip address
-        String address = input.nextLine();
-
+        // create fields
         Socket clientSocket = null;
         PrintWriter clientWriter = null;
         BufferedReader in = null;
-        //InetAddress address = InetAddress.getLocalHost();
+        InetAddress address = InetAddress.getLocalHost();
         System.out.println("Server IP address: " + address);
 
         try {
@@ -30,14 +27,22 @@ public class Client extends PublicIp{
             // read server response
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             Scanner scan = new Scanner(System.in);
-
+            System.out.println("the server is able to compute basic mathematical operations, if you would like to try it type 'math'\n" +
+                    "greet the server by saying 'hello'\ntype 'bye' to terminate connection\n------------------------");
             // while loop to communicate with server
             while(true) {
-
+                // save user math input to variable
+                String math;
                 // send a message to server
                 System.out.print("communicate with server: ");
                 String message = scan.nextLine();
                 // write to server from the command line
+               while(message.contains("math")){
+                    Scanner input = new Scanner(System.in);
+                    System.out.print("enter operation: ");
+                   math = input.nextLine();
+                   message= math;
+                }
 
                 clientWriter.write(message);
                 clientWriter.println(); // create a new line character
@@ -56,18 +61,6 @@ public class Client extends PublicIp{
             // close resources
         }catch(IOException e){
             System.out.println("server not found: " + e.getMessage());
-        } finally{
-            try {
-                if (clientSocket != null)
-                    clientSocket.close();
-                if (clientWriter != null)
-                    clientWriter.close();
-                if (in != null)
-                    in.close();
-
-            } catch(IOException e){
-
-            }
 
         }
     }
