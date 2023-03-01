@@ -7,6 +7,7 @@ import java.net.Socket;
  * @author Wakuma Bayan
  * server class creates an instace of ServerSocket to commuincate with client
  */
+//test comment
 
 public class Server {
     public static void main(String[] args) throws IOException { // main
