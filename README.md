@@ -1,3 +1,3 @@
 # SocketServer
-Create a local server socket and client socket to communicate 
+This program creates a socket and server to establish a connection for communication.
 
